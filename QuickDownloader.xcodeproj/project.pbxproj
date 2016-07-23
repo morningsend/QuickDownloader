@@ -10,6 +10,9 @@
 		42996AF57D92B9A3A928ADB3 /* Pods_QuickDownloaderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DF67C1842F2F4A6FCFF513 /* Pods_QuickDownloaderTests.framework */; };
 		647F052AE8F674420CFF6FC5 /* Pods_QuickDownloaderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F27BA46A74A0DCDC405481 /* Pods_QuickDownloaderUITests.framework */; };
 		D7E89C898825C1016E7F4D0F /* Pods_QuickDownloader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A33B183DA522C06987F1068 /* Pods_QuickDownloader.framework */; };
+		FE25A0C31D41993B002416CC /* ImageListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25A0C21D41993B002416CC /* ImageListItemModel.swift */; };
+		FE25A0C51D419AE0002416CC /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25A0C41D419AE0002416CC /* ImageListItem.swift */; };
+		FE25A0C91D41ABA3002416CC /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25A0C81D41ABA3002416CC /* ImageListCell.swift */; };
 		FE49329E1D4195C200849746 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49329D1D4195C200849746 /* AppDelegate.swift */; };
 		FE4932A01D4195C200849746 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49329F1D4195C200849746 /* FirstViewController.swift */; };
 		FE4932A21D4195C200849746 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4932A11D4195C200849746 /* SecondViewController.swift */; };
@@ -47,6 +50,9 @@
 		D79DC92879F9E5C7401DA537 /* Pods-QuickDownloader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickDownloader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickDownloader/Pods-QuickDownloader.debug.xcconfig"; sourceTree = "<group>"; };
 		ECD867B6913892A163954ACF /* Pods-QuickDownloaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickDownloaderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickDownloaderTests/Pods-QuickDownloaderTests.release.xcconfig"; sourceTree = "<group>"; };
 		F883BC2B4895EDBEEF9F38B6 /* Pods-QuickDownloaderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickDownloaderUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickDownloaderUITests/Pods-QuickDownloaderUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		FE25A0C21D41993B002416CC /* ImageListItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListItemModel.swift; sourceTree = "<group>"; };
+		FE25A0C41D419AE0002416CC /* ImageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListItem.swift; sourceTree = "<group>"; };
+		FE25A0C81D41ABA3002416CC /* ImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
 		FE49329A1D4195C200849746 /* QuickDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE49329D1D4195C200849746 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE49329F1D4195C200849746 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +120,39 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FE25A0C01D4198A1002416CC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FE49329F1D4195C200849746 /* FirstViewController.swift */,
+				FE4932A11D4195C200849746 /* SecondViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FE25A0C11D4198F6002416CC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FE25A0C21D41993B002416CC /* ImageListItemModel.swift */,
+				FE25A0C41D419AE0002416CC /* ImageListItem.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FE25A0C61D419CC9002416CC /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		FE25A0C71D41AB7D002416CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE25A0C81D41ABA3002416CC /* ImageListCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		FE4932911D4195C200849746 = {
 			isa = PBXGroup;
 			children = (
@@ -139,9 +178,11 @@
 		FE49329C1D4195C200849746 /* QuickDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				FE25A0C71D41AB7D002416CC /* Views */,
+				FE25A0C61D419CC9002416CC /* Network */,
+				FE25A0C11D4198F6002416CC /* Models */,
+				FE25A0C01D4198A1002416CC /* Controllers */,
 				FE49329D1D4195C200849746 /* AppDelegate.swift */,
-				FE49329F1D4195C200849746 /* FirstViewController.swift */,
-				FE4932A11D4195C200849746 /* SecondViewController.swift */,
 				FE4932A31D4195C200849746 /* Main.storyboard */,
 				FE4932A61D4195C200849746 /* Assets.xcassets */,
 				FE4932A81D4195C200849746 /* LaunchScreen.storyboard */,
@@ -244,6 +285,7 @@
 				TargetAttributes = {
 					FE4932991D4195C200849746 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 9J2YT46347;
 					};
 					FE4932AF1D4195C300849746 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -431,7 +473,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE4932A21D4195C200849746 /* SecondViewController.swift in Sources */,
+				FE25A0C91D41ABA3002416CC /* ImageListCell.swift in Sources */,
 				FE49329E1D4195C200849746 /* AppDelegate.swift in Sources */,
+				FE25A0C51D419AE0002416CC /* ImageListItem.swift in Sources */,
+				FE25A0C31D41993B002416CC /* ImageListItemModel.swift in Sources */,
 				FE4932A01D4195C200849746 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,10 +622,13 @@
 			baseConfigurationReference = D79DC92879F9E5C7401DA537 /* Pods-QuickDownloader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = QuickDownloader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zaiyangli.QuickDownloader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -589,10 +637,13 @@
 			baseConfigurationReference = 905A8B4FC9BE06BF8AB7B572 /* Pods-QuickDownloader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = QuickDownloader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zaiyangli.QuickDownloader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

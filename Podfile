@@ -8,7 +8,7 @@ target 'QuickDownloader' do
     # Pods for QuickDownloader
 
     pod 'Alamofire', '~> 3.4'
-    pod 'ReactiveCocoa', '~> 4.2'
+    pod 'RxSwift', '~> 2.6'
     pod 'RealmSwift', '~> 1.0'
     pod 'SDWebImage', '~> 3.8'
     pod 'Mantle', '~> 2.0'
