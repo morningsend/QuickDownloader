@@ -49,8 +49,18 @@ class DownloadViewController : UITableViewController {
                 } else {
                     self?.navigationController!.tabBarItem.badgeValue = "\((self?.downloadImageList?.count)!)"
                 }
-                
-                tableView.reloadData()
+                let deletedIndexPaths = deletions.map({ (index) -> NSIndexPath in
+                    return NSIndexPath(forRow: index, inSection: 0)
+                })
+                let insertedIndexPaths = insertions.map({ (index) -> NSIndexPath in
+                    return NSIndexPath(forRow: index, inSection: 0)
+                })
+                let modifiedIndexPaths = modifications.map({ NSIndexPath(forRow:$0, inSection: 0) })
+                tableView.beginUpdates()
+                tableView.deleteRowsAtIndexPaths(deletedIndexPaths, withRowAnimation: .Automatic)
+                tableView.insertRowsAtIndexPaths(insertedIndexPaths, withRowAnimation: .Automatic)
+                tableView.reloadRowsAtIndexPaths(modifiedIndexPaths, withRowAnimation: .Automatic)
+                tableView.endUpdates()
                     break;
             case .Error(let error):
                 print(error)
@@ -78,7 +88,7 @@ class DownloadViewController : UITableViewController {
         DownloadListDAO.sharedInstance.clearList()
     }
     func downloadAllPressed(sender: UIBarButtonItem){
-        Alamofire.request
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

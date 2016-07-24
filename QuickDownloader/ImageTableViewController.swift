@@ -12,11 +12,12 @@ import Mantle
 import SDWebImage
 import RealmSwift
 
-class ImageTableViewController : UITableViewController {
+class ImageTableViewController : UITableViewController, UISearchResultsUpdating {
     
-    @IBOutlet var searchBar: UISearchBar!
-    
+    let searchController = UISearchController(searchResultsController: nil)
     var images : Results<ImageListItem>?
+    var imagesFilteredByAuthor: Results<ImageListItem>?
+    
     var currentDetailImageId : Int = -1
     var detailViewController : ImageDetailViewController?
     override func viewDidLoad() {
@@ -28,6 +29,14 @@ class ImageTableViewController : UITableViewController {
         self.refreshControl? = refreshControl
         self.navigationItem.title = "Unsplash.it"
         self.images = ImageDAO.sharedInstance.getAllImageItems()
+        
+        setupSearchController()
+    }
+    internal func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,15 +83,23 @@ class ImageTableViewController : UITableViewController {
         return 1
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(!isSearching()){
         if (self.images != nil) {
             return (self.images?.count)!
         } else {
             return 0
         }
+        } else {
+            return imagesFilteredByAuthor!.count
+        }
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let item = self.images?[indexPath.row]
-        
+        var item : ImageListItem? = nil;
+        if(!isSearching()){
+            item = self.images?[indexPath.row]
+        } else {
+            item = self.imagesFilteredByAuthor?[indexPath.row]
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("ImageListCell", forIndexPath: indexPath)
         
         if let imageCell = cell as? ImageListCell {
@@ -100,7 +117,11 @@ class ImageTableViewController : UITableViewController {
         return cell;
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        detailViewController?.imageItemId = (images?[indexPath.row].id)!
+        if(!isSearching()){
+            detailViewController?.imageItemId = (images?[indexPath.row].id)!
+        }else {
+            detailViewController?.imageItemId = (imagesFilteredByAuthor?[indexPath.row].id)!
+        }
     }
     func addButtonPressed(sender:UIButton)->(){
         print("button with tag: \(sender.tag) pressed")
@@ -113,6 +134,16 @@ class ImageTableViewController : UITableViewController {
         if(segue.identifier == ImageDetailViewController.showDetailSegueId){
             detailViewController = segue.destinationViewController as? ImageDetailViewController
         }
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchText = self.searchController.searchBar.text!
+        imagesFilteredByAuthor = images?.filter("author BEGINSWITH '\(searchText)'")
+        tableView.reloadData()
+    }
+    
+    internal func isSearching()->Bool {
+        return self.searchController.active
     }
 }
 
