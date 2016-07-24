@@ -10,13 +10,15 @@ import UIKit
 import Alamofire
 import Mantle
 import SDWebImage
+import RealmSwift
 
-class ImageTableViewController : UITableViewController, UISearchBarDelegate {
+class ImageTableViewController : UITableViewController {
     
     @IBOutlet var searchBar: UISearchBar!
     
-    var imageItems : [ImageListItemModel] = []
-    
+    var images : Results<ImageListItem>?
+    var currentDetailImageId : Int = -1
+    var detailViewController : ImageDetailViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -25,8 +27,7 @@ class ImageTableViewController : UITableViewController, UISearchBarDelegate {
         refreshControl.addTarget(self, action: #selector(ImageTableViewController.beginDownloadImageList), forControlEvents: .ValueChanged)
         self.refreshControl? = refreshControl
         self.navigationItem.title = "Unsplash.it"
-        self.searchDisplayController?.searchResultsTableView.registerClass(ImageListCell.self, forCellReuseIdentifier: "ImageListCell")
-        
+        self.images = ImageDAO.sharedInstance.getAllImageItems()
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,10 +42,16 @@ class ImageTableViewController : UITableViewController, UISearchBarDelegate {
                 case .Success(let json):
                     do {
                     //print(json)
-                    let imageItemModels = try MTLJSONAdapter.modelsOfClass(ImageListItemModel.self, fromJSONArray:json as! [AnyObject])
+                        let imageItemModels = try MTLJSONAdapter.modelsOfClass(ImageListItemModel.self,
+                            fromJSONArray:json as! [AnyObject])
+                        var items = [ImageListItem]()
+                        for model in imageItemModels {
+                            let item = ImageListItem.from(model as! ImageListItemModel)
+                            items.append(item)
+                        }
+                        ImageDAO.sharedInstance.createOrUpdateImages(items)
                         dispatch_async(dispatch_get_main_queue()) { [weak self] in
                             self?.refreshControl?.endRefreshing()
-                            self?.imageItems = imageItemModels as! [ImageListItemModel]
                             self?.tableView.reloadData()
                         }
                     }
@@ -67,27 +74,41 @@ class ImageTableViewController : UITableViewController, UISearchBarDelegate {
         return 1
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.imageItems.count
+        if (self.images != nil) {
+            return (self.images?.count)!
+        } else {
+            return 0
+        }
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let item = imageItems[indexPath.row]
+        let item = self.images?[indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ImageListCell", forIndexPath: indexPath)
         
         if let imageCell = cell as? ImageListCell {
-            let urlString = "https://unsplash.it/300/200?image=\(item.id)"
+            let urlString = "https://unsplash.it/300/200?image=\(item!.id)"
             imageCell.thumbnailView.sd_setImageWithURL(NSURL(string: urlString))
-            imageCell.author.text = item.author
+            imageCell.author.text = item!.author
             imageCell.add .addTarget(self, action: #selector(self.addButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            imageCell.add.tag = item.id
+            imageCell.add.tag = item!.id
+            if item?.downloaded.value == nil {
+                imageCell.add.enabled = true
+            } else {
+                imageCell.add.enabled = !(item?.downloaded.value)!
+            }
         }
         return cell;
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.reloadData()
+        detailViewController?.imageItemId = (images?[indexPath.row].id)!
     }
     func addButtonPressed(sender:UIButton)->(){
         print("button with tag: \(sender.tag) pressed")
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == ImageDetailViewController.showDetailSegueId){
+            detailViewController = segue.destinationViewController as? ImageDetailViewController
+        }
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController = mainStoryboard.instantiateInitialViewController()
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
+        
+        //clearCachedData()
+        
         return true
+    }
+    func clearCachedData(){
+        let imageCache = SDImageCache.sharedImageCache()
+        imageCache.clearDisk()
     }
 
     func applicationWillResignActive(application: UIApplication) {

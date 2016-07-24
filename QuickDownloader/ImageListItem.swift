@@ -19,7 +19,12 @@ class ImageListItem: Object {
     dynamic var author: String = ""
     dynamic var authorURL : String = ""
     dynamic var postURL : String = ""
-
+    
+    let downloaded = RealmOptional<Bool>(false)
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 extension ImageListItem {
