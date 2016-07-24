@@ -19,23 +19,28 @@ class DownloadListDAO : NSObject {
     var downloadList : ImageDownloadList?
     
     internal required override init(){
+        super.init()
         let config = Realm.Configuration.defaultConfiguration
-        config.fileURL?.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("download.realm")
         realm = try! Realm(configuration: config)
-        
+        loadList()
     }
     internal func loadList(){
         downloadList = realm?.objectForPrimaryKey(ImageDownloadList.self, key: NSNumber(integer: id))
         if downloadList == nil {
             downloadList = ImageDownloadList()
             downloadList!.id = self.id
-            realm?.add(downloadList!)
+            try! realm?.write({
+                realm?.add(downloadList!)
+            })
         }
     }
     func insertImageIntoList(image: ImageListItem){
         downloadList = realm?.objectForPrimaryKey(ImageDownloadList.self, key: id)
         try! realm?.write({
-            downloadList?.images.append(image)
+            let index = downloadList?.images.indexOf(image)
+            if index == nil {
+                downloadList?.images.append(image)
+            }
         })
     }
     func removeImageFromList(image: ImageListItem){
@@ -59,5 +64,15 @@ class DownloadListDAO : NSObject {
     func addNotificationToDownloadList(block: (RealmCollectionChange<List<ImageListItem>>) -> ()) -> NotificationToken {
         downloadList = realm?.objectForPrimaryKey(ImageDownloadList.self, key: id)
         return (downloadList?.images.addNotificationBlock(block))!
+    }
+    func getAllImagesInList() -> List<ImageListItem> {
+        downloadList = realm?.objectForPrimaryKey(ImageDownloadList.self, key: id)
+        return (downloadList?.images)!
+    }
+    func clearList(){
+        downloadList = realm?.objectForPrimaryKey(ImageDownloadList.self, key: id)
+        try! realm?.write({ 
+            downloadList?.images.removeAll()
+        })
     }
 }

@@ -104,6 +104,10 @@ class ImageTableViewController : UITableViewController {
     }
     func addButtonPressed(sender:UIButton)->(){
         print("button with tag: \(sender.tag) pressed")
+        let imageItem = images?.filter(NSPredicate(format: "id == %d", sender.tag))
+        if(imageItem?.count > 0) {
+            DownloadListDAO.sharedInstance.insertImageIntoList(imageItem![0])
+        }
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == ImageDetailViewController.showDetailSegueId){

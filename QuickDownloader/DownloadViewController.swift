@@ -8,6 +8,8 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
+
 @objc
 protocol DownloadViewControllerDataSource {
     func numberOfFiles(controller: DownloadViewController) -> Int;
@@ -21,21 +23,62 @@ protocol DownloadViewControllerDelegate {
     func didStartDownloadFile(name: String, url: NSURL) -> Void;
 }
 
-@objc @IBDesignable
 class DownloadViewController : UITableViewController {
+
     
-    @IBOutlet var downloadDataSource : DownloadViewControllerDataSource?
-    @IBOutlet var downloadDelegate: DownloadViewControllerDelegate?
-    
+    var realmNotificationToken : NotificationToken? = nil
+    var downloadImageList : Results<ImageListItem>? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.title = "Download"
-        
+        downloadImageList = DownloadListDAO.sharedInstance.getAllImagesInList().sorted("id")
+        realmNotificationToken = DownloadListDAO.sharedInstance.addNotificationToDownloadList({[weak self] (changes : RealmCollectionChange<List<ImageListItem>>) in
+            guard let tableView = self?.tableView else {
+                return
+            }
+            switch(changes){
+            case .Initial:
+                    break;
+            case .Update(_, let deletions, let insertions, let modifications):
+                print(deletions)
+                print(insertions)
+                print(modifications)
+                if (self?.isViewLoaded())! && self?.view.window != nil {
+                    
+                } else {
+                    self?.navigationController!.tabBarItem.badgeValue = "\((self?.downloadImageList?.count)!)"
+                }
+                
+                tableView.reloadData()
+                    break;
+            case .Error(let error):
+                print(error)
+                    break;
+            }
+        })
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.tabBarItem.badgeValue = nil
+        if(numberOfSectionsInTableView(self.tableView) > 0){
+            setClearAllBarItem()
+            setDownloadAllBarItem()
+        }
+    }
+    internal func setDownloadAllBarItem() {
+        let downloadAllBarItem = UIBarButtonItem(title: "Download All", style: .Done, target: self, action: #selector(self.downloadAllPressed(_:)))
+        self.navigationItem.leftBarButtonItem = downloadAllBarItem
+    }
+    internal func setClearAllBarItem(){
+        let clearAllBarItem = UIBarButtonItem(title: "Clear List", style: UIBarButtonItemStyle.Plain , target: self, action: #selector(self.clearListPressed(_:)))
+        self.navigationItem.rightBarButtonItem = clearAllBarItem
+    }
+    func clearListPressed(sender: UIBarButtonItem){
+        DownloadListDAO.sharedInstance.clearList()
+    }
+    func downloadAllPressed(sender: UIBarButtonItem){
+        Alamofire.request
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -43,9 +86,28 @@ class DownloadViewController : UITableViewController {
     }
     func refreshDownloadList(){
         self.tableView.reloadData()
-        let numberOfFiles = downloadDataSource?.numberOfFiles(self)
-        let badge: String? = numberOfFiles > 0 ? "\(numberOfFiles)" : nil
-        self.navigationController?.tabBarItem.badgeValue = badge
+    }
+    
+    deinit {
+        realmNotificationToken?.stop()
+    }
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return DownloadListDAO.sharedInstance.getAllImagesInList().count
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("DownloadTableViewCell", forIndexPath: indexPath) as! DownloadTableViewCell
+        let item = downloadImageList?[indexPath.row]
+        cell.authorLabel.text = item!.author
+        cell.thumbnailView.sd_setImageWithURL(NSURL(string: "https://unsplash.it/300/200?image=\(item!.id)"))
+        cell.downloadProgress.progress = 0.0
+        cell.selectionStyle = .None
+        return cell
+    }
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
 }
 

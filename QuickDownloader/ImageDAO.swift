@@ -13,8 +13,8 @@ class ImageDAO: NSObject {
     var realm : Realm?
     internal required override init(){
         super.init()
-        var config = Realm.Configuration()
-        config.fileURL = config.fileURL?.URLByDeletingLastPathComponent?.URLByAppendingPathComponent("images.realm")
+        var config = Realm.Configuration.defaultConfiguration
+
         realm = try! Realm(configuration: config)
     }
     
