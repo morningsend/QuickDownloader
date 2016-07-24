@@ -14,6 +14,7 @@ class ImageListCell: UITableViewCell {
     @IBOutlet var authorLabel: UILabel!
     @IBOutlet var sizeLabel: UILabel!
     @IBOutlet var addButton: UIButton!
+    
     var size : UILabel {
         get {
             return self.sizeLabel
@@ -53,7 +54,17 @@ class ImageListCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: "ImageListCell")
+        super.init(style: .Default, reuseIdentifier:reuseIdentifier)
+        loadCellComponents()
+    }
+    init(){
+        super.init(style:.Default, reuseIdentifier:"ImageListCell")
+    }
+    func loadCellComponents(){
+        thumbnail = UIImageView()
+        authorLabel = UILabel()
+        sizeLabel = UILabel()
+        addButton = UIButton()
     }
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -65,5 +76,4 @@ class ImageListCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

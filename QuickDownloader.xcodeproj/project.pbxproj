@@ -14,13 +14,15 @@
 		FE25A0C51D419AE0002416CC /* ImageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25A0C41D419AE0002416CC /* ImageListItem.swift */; };
 		FE25A0C91D41ABA3002416CC /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25A0C81D41ABA3002416CC /* ImageListCell.swift */; };
 		FE49329E1D4195C200849746 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49329D1D4195C200849746 /* AppDelegate.swift */; };
-		FE4932A01D4195C200849746 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49329F1D4195C200849746 /* FirstViewController.swift */; };
-		FE4932A21D4195C200849746 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4932A11D4195C200849746 /* SecondViewController.swift */; };
+		FE4932A01D4195C200849746 /* ImageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49329F1D4195C200849746 /* ImageTableViewController.swift */; };
+		FE4932A21D4195C200849746 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4932A11D4195C200849746 /* DownloadViewController.swift */; };
 		FE4932A51D4195C200849746 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE4932A31D4195C200849746 /* Main.storyboard */; };
 		FE4932A71D4195C200849746 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE4932A61D4195C200849746 /* Assets.xcassets */; };
 		FE4932AA1D4195C200849746 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE4932A81D4195C200849746 /* LaunchScreen.storyboard */; };
 		FE4932B51D4195C300849746 /* QuickDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4932B41D4195C300849746 /* QuickDownloaderTests.swift */; };
 		FE4932C01D4195C300849746 /* QuickDownloaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4932BF1D4195C300849746 /* QuickDownloaderUITests.swift */; };
+		FED1016E1D44333F00796A9F /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED1016D1D44333F00796A9F /* RootViewController.swift */; };
+		FED101701D44384100796A9F /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED1016F1D44384100796A9F /* ImageDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +57,8 @@
 		FE25A0C81D41ABA3002416CC /* ImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
 		FE49329A1D4195C200849746 /* QuickDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE49329D1D4195C200849746 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FE49329F1D4195C200849746 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		FE4932A11D4195C200849746 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		FE49329F1D4195C200849746 /* ImageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewController.swift; sourceTree = "<group>"; };
+		FE4932A11D4195C200849746 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		FE4932A41D4195C200849746 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FE4932A61D4195C200849746 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE4932A91D4195C200849746 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		FE4932BB1D4195C300849746 /* QuickDownloaderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickDownloaderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE4932BF1D4195C300849746 /* QuickDownloaderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDownloaderUITests.swift; sourceTree = "<group>"; };
 		FE4932C11D4195C300849746 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FED1016D1D44333F00796A9F /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		FED1016F1D44384100796A9F /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +127,10 @@
 		FE25A0C01D4198A1002416CC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FE49329F1D4195C200849746 /* FirstViewController.swift */,
-				FE4932A11D4195C200849746 /* SecondViewController.swift */,
+				FE49329F1D4195C200849746 /* ImageTableViewController.swift */,
+				FED1016F1D44384100796A9F /* ImageDetailViewController.swift */,
+				FE4932A11D4195C200849746 /* DownloadViewController.swift */,
+				FED1016D1D44333F00796A9F /* RootViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -472,12 +478,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE4932A21D4195C200849746 /* SecondViewController.swift in Sources */,
+				FE4932A21D4195C200849746 /* DownloadViewController.swift in Sources */,
 				FE25A0C91D41ABA3002416CC /* ImageListCell.swift in Sources */,
 				FE49329E1D4195C200849746 /* AppDelegate.swift in Sources */,
+				FED1016E1D44333F00796A9F /* RootViewController.swift in Sources */,
 				FE25A0C51D419AE0002416CC /* ImageListItem.swift in Sources */,
 				FE25A0C31D41993B002416CC /* ImageListItemModel.swift in Sources */,
-				FE4932A01D4195C200849746 /* FirstViewController.swift in Sources */,
+				FE4932A01D4195C200849746 /* ImageTableViewController.swift in Sources */,
+				FED101701D44384100796A9F /* ImageDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

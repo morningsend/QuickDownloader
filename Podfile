@@ -13,7 +13,8 @@ target 'QuickDownloader' do
     pod 'SDWebImage', '~> 3.8'
     pod 'Mantle', '~> 2.0'
     pod 'PINCache', '~> 2.3'
-
+    pod 'SnapKit', '0.30.0.beta2'
+    
     target 'QuickDownloaderTests' do
         inherit! :search_paths
         # Pods for testing

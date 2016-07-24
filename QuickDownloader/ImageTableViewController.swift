@@ -10,19 +10,25 @@ import UIKit
 import Alamofire
 import Mantle
 import SDWebImage
-class FirstViewController: UITableViewController {
+
+class ImageTableViewController : UITableViewController, UISearchBarDelegate {
+    
+    @IBOutlet var searchBar: UISearchBar!
     
     var imageItems : [ImageListItemModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("View did load")
         // Do any additional setup after loading the view, typically from a nib.
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull down to refresh")
-        refreshControl.addTarget(self, action: #selector(FirstViewController.beginDownloadImageList), forControlEvents: .ValueChanged)
+        refreshControl.addTarget(self, action: #selector(ImageTableViewController.beginDownloadImageList), forControlEvents: .ValueChanged)
         self.refreshControl? = refreshControl
         self.navigationItem.title = "Unsplash.it"
+        self.searchDisplayController?.searchResultsTableView.registerClass(ImageListCell.self, forCellReuseIdentifier: "ImageListCell")
+        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -36,11 +42,11 @@ class FirstViewController: UITableViewController {
                     do {
                     //print(json)
                     let imageItemModels = try MTLJSONAdapter.modelsOfClass(ImageListItemModel.self, fromJSONArray:json as! [AnyObject])
-                    dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                        self?.refreshControl?.endRefreshing()
-                        self?.imageItems = imageItemModels as! [ImageListItemModel]
-                        self?.tableView.reloadData()
-                    }
+                        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                            self?.refreshControl?.endRefreshing()
+                            self?.imageItems = imageItemModels as! [ImageListItemModel]
+                            self?.tableView.reloadData()
+                        }
                     }
                     catch {
                         
